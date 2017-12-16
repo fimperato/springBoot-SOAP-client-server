@@ -30,4 +30,7 @@ Compiled source
 # IDE #
 #######
 *.iml
+# Eclipse file
 *.project
+.settings/
+target/
