@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.11 
+Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
+Generato il: 2017.11.30 alle 12:03:58 PM CET 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://soap.test.myst.it/documentoDef">
+    <schemaBindings map="false">
+      <package name="it.myst.test.soap.documentodef"/>
+    </schemaBindings>
+    <bindings scd="tns:getDocumentoRequest">
+      <class ref="it.myst.test.soap.documentodef.GetDocumentoRequest"/>
+    </bindings>
+    <bindings scd="tns:uploadDocumentoRequest">
+      <class ref="it.myst.test.soap.documentodef.UploadDocumentoRequest"/>
+    </bindings>
+    <bindings scd="~tns:documento">
+      <class ref="it.myst.test.soap.documentodef.Documento"/>
+    </bindings>
+    <bindings scd="tns:getDocumentoResponse">
+      <class ref="it.myst.test.soap.documentodef.GetDocumentoResponse"/>
+    </bindings>
+  </bindings>
+</bindings>
+
