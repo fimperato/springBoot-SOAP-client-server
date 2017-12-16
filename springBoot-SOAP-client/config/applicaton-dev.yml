@@ -1,0 +1,29 @@
+server:
+  port: 8083
+  context-path: /springBoot-SOAP-client
+it:
+  myst:
+    test:
+      datasource:
+        master:
+          platform: postgres
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:7432/test
+          username: root
+          password: root
+        slave:
+          platform: postgres
+          driverClassName: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:8432/test
+          username: root
+          password: root
+spring:
+  application:
+    name: springBoot-SOAP-client-jpa
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+logging:
+  file: ./target/springBoot-SOAP-client-jpa.log

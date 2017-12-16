@@ -1,0 +1,15 @@
+server:
+  port: 8083
+  context-path: /spring-soap
+it:
+  myst:
+    test:
+      flight:
+        soap:
+          generatePackage: it.myst.test.wsdl
+          defaultUri: http://www.webservicex.net/airport.asmx
+spring:
+  application:
+    name: spring-soap
+logging:
+  file: ./target/springBoot-SOAP-client.log
