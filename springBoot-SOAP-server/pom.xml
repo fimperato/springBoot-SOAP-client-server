@@ -33,6 +33,7 @@
     </dependencies>
 
     <build>
+    	<finalName>springBoot-SOAP-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -53,25 +54,28 @@
                     </execution>
                 </executions>
                 <configuration>
-	                <sources>
-					     <source>${project.basedir}/src/main/resources/xsd/documentoSchema.xsd</source>
-					     <source>${project.basedir}/src/main/resources/xsd/directory-xsds</source>
-					 </sources>
 <!--                    deprecated in 2.x: <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory> -->
-                    
 <!--                    You should never generate to your source folder, but to target/generated-sources/xjc. 
 						Generated code should not be version-controlled and can be deleted at any-time since it will be regenerated anyway.
 						Generated code should always be located under target, the build directory of Maven. The jaxb2-maven-plugin will generate classes by default under target/generated-sources/jaxb and there's really no reason to change that. 
 						<outputDirectory>${project.basedir}/src/main/java/</outputDirectory> -->
                     <outputDirectory>${project.basedir}/generated-sources/java/</outputDirectory>
                     <clearOutputDir>true</clearOutputDir>
+                     <!-- Indicate that we should use DTD input instead of XSDs -->
+	                <sourceType>XmlSchema</sourceType>
+	
+	                <!-- Define the directory where we should find the DTD files -->
+	                <sources>
+	                    <source>${project.basedir}/src/main/resources/xsd/documentoSchema.xsd</source>
+					    <source>${project.basedir}/src/main/resources/xsd/directory-xsds</source>
+	                </sources>
                 </configuration>
             </plugin>
             
 	      	<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>build-helper-maven-plugin</artifactId>
-		        <version>3.0.0</version>
+<!-- 		        <version>3.0.0</version> -->
 		        <executions>
 		          <execution>
 		            <id>add-source</id>
@@ -88,6 +92,17 @@
 		          </execution>
 		        </executions>
 	      	</plugin>
+			
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-compiler-plugin</artifactId>
+			    <configuration>
+			        <compilerArguments>
+			            <source>1.8</source>
+			            <target>1.8</target>
+			        </compilerArguments>
+			    </configuration>
+			</plugin>
 
         </plugins>
     </build>

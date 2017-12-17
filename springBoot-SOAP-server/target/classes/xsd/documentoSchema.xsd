@@ -1,8 +1,8 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:tns="http://soap.test.myst.it/documentoDef"
            targetNamespace="http://soap.test.myst.it/documentoDef"
-           elementFormDefault="qualified" >
-
+           elementFormDefault="qualified">
+           
     <xs:element name="getDocumentoRequest">
         <xs:complexType>
             <xs:sequence>
