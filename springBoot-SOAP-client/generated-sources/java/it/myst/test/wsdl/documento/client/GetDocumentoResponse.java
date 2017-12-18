@@ -2,14 +2,15 @@
 // Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.11 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2017.11.30 alle 05:28:33 PM CET 
+// Generato il: 2017.12.16 alle 09:27:38 PM CET 
 //
 
 
-package it.myst.test.wsdl;
+package it.myst.test.wsdl.documento.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="getAirportInformationByISOCountryCodeResult" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="documento" type="{http://soap.test.myst.it/documentoDef}documento"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,35 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "getAirportInformationByISOCountryCodeResult"
+    "documento"
 })
-@XmlRootElement(name = "getAirportInformationByISOCountryCodeResponse")
-public class GetAirportInformationByISOCountryCodeResponse {
+@XmlRootElement(name = "getDocumentoResponse")
+public class GetDocumentoResponse {
 
-    protected String getAirportInformationByISOCountryCodeResult;
+    @XmlElement(required = true)
+    protected Documento documento;
 
     /**
-     * Recupera il valore della proprietà getAirportInformationByISOCountryCodeResult.
+     * Recupera il valore della proprietà documento.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Documento }
      *     
      */
-    public String getGetAirportInformationByISOCountryCodeResult() {
-        return getAirportInformationByISOCountryCodeResult;
+    public Documento getDocumento() {
+        return documento;
     }
 
     /**
-     * Imposta il valore della proprietà getAirportInformationByISOCountryCodeResult.
+     * Imposta il valore della proprietà documento.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Documento }
      *     
      */
-    public void setGetAirportInformationByISOCountryCodeResult(String value) {
-        this.getAirportInformationByISOCountryCodeResult = value;
+    public void setDocumento(Documento value) {
+        this.documento = value;
     }
 
 }

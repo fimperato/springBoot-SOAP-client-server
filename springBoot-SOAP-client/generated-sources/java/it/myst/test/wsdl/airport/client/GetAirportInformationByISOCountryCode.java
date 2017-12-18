@@ -2,14 +2,15 @@
 // Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.11 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2017.11.30 alle 05:28:33 PM CET 
+// Generato il: 2017.12.16 alle 09:27:38 PM CET 
 //
 
 
-package it.myst.test.wsdl;
+package it.myst.test.wsdl.airport.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -24,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="CountryAbbrviation" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,35 +36,36 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "country"
+    "countryAbbrviation"
 })
-@XmlRootElement(name = "GetAirportInformationByCountry")
-public class GetAirportInformationByCountry {
+@XmlRootElement(name = "getAirportInformationByISOCountryCode")
+public class GetAirportInformationByISOCountryCode {
 
-    protected String country;
+    @XmlElement(name = "CountryAbbrviation")
+    protected String countryAbbrviation;
 
     /**
-     * Recupera il valore della proprietà country.
+     * Recupera il valore della proprietà countryAbbrviation.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCountry() {
-        return country;
+    public String getCountryAbbrviation() {
+        return countryAbbrviation;
     }
 
     /**
-     * Imposta il valore della proprietà country.
+     * Imposta il valore della proprietà countryAbbrviation.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCountry(String value) {
-        this.country = value;
+    public void setCountryAbbrviation(String value) {
+        this.countryAbbrviation = value;
     }
 
 }

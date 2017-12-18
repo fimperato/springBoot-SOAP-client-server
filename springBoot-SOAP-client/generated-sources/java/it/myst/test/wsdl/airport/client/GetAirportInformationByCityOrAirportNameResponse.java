@@ -2,11 +2,11 @@
 // Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.11 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2017.11.30 alle 05:28:33 PM CET 
+// Generato il: 2017.12.16 alle 09:27:38 PM CET 
 //
 
 
-package it.myst.test.wsdl;
+package it.myst.test.wsdl.airport.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="cityOrAirportName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="getAirportInformationByCityOrAirportNameResult" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,35 +35,35 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "cityOrAirportName"
+    "getAirportInformationByCityOrAirportNameResult"
 })
-@XmlRootElement(name = "getAirportInformationByCityOrAirportName")
-public class GetAirportInformationByCityOrAirportName {
+@XmlRootElement(name = "getAirportInformationByCityOrAirportNameResponse")
+public class GetAirportInformationByCityOrAirportNameResponse {
 
-    protected String cityOrAirportName;
+    protected String getAirportInformationByCityOrAirportNameResult;
 
     /**
-     * Recupera il valore della proprietà cityOrAirportName.
+     * Recupera il valore della proprietà getAirportInformationByCityOrAirportNameResult.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCityOrAirportName() {
-        return cityOrAirportName;
+    public String getGetAirportInformationByCityOrAirportNameResult() {
+        return getAirportInformationByCityOrAirportNameResult;
     }
 
     /**
-     * Imposta il valore della proprietà cityOrAirportName.
+     * Imposta il valore della proprietà getAirportInformationByCityOrAirportNameResult.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCityOrAirportName(String value) {
-        this.cityOrAirportName = value;
+    public void setGetAirportInformationByCityOrAirportNameResult(String value) {
+        this.getAirportInformationByCityOrAirportNameResult = value;
     }
 
 }

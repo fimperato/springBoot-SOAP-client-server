@@ -12,4 +12,4 @@ mvn jaxb2:xjc
 mvn clean generate-sources
 mvn eclipse:eclipse (to force build path by maven settings)
 
-
+#### other (header security, more method to soap endpoint, https)

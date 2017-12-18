@@ -11,4 +11,148 @@
 <!--   <version>0.0.1-SNAPSHOT</version> -->
   <name>springBoot-SOAP-client</name>
   <description>springBoot SOAP client</description>
+  <packaging>war</packaging>
+  
+  <profiles>
+		<profile>
+			<id>spring-client</id>
+			<activation>
+	            <property>
+	                <name>env</name>
+	            </property>
+	       	</activation>			
+			<build>
+				<plugins>
+            		<!-- tag::wsdl[] -->
+		            <plugin>
+		                <groupId>org.jvnet.jaxb2.maven2</groupId>
+		                <artifactId>maven-jaxb2-plugin</artifactId>
+		                <version>0.13.3</version>
+		                <executions>
+		                    <execution>
+		                    	<id>schema1-generate</id>
+		                    	<phase>generate-sources</phase>
+		                        <goals>
+		                            <goal>generate</goal>
+		                        </goals>
+								<configuration>
+				                    <schemaLanguage>WSDL</schemaLanguage>
+				                    <schemas>
+				                        <schema>
+				                            <url>http://www.webservicex.net/airport.asmx?WSDL</url>
+				                        </schema>
+				                    </schemas>
+				                    <generatePackage>it.myst.test.wsdl.airport.client</generatePackage>
+				                    <generateDirectory>${project.basedir}/generated-sources/java</generateDirectory>
+				                </configuration>
+		                    </execution>
+		                    
+		                    <execution>
+		                    	<id>schema2-generate</id>
+		                    	<phase>generate-sources</phase>
+		                        <goals>
+		                            <goal>generate</goal>
+		                        </goals>
+			                    <configuration>
+				                    <schemaLanguage>WSDL</schemaLanguage>
+				                    <schemas>
+				                        <schema>
+				                            <url>http://localhost:8082/ws/documentoDef.wsdl</url>
+				                        </schema>
+				                    </schemas>
+				                    <generatePackage>it.myst.test.wsdl.documento.client</generatePackage>
+				                    <generateDirectory>${project.basedir}/generated-sources/java</generateDirectory>
+				                </configuration>
+		                    </execution>
+		                </executions>
+		                
+		                
+				                
+		            </plugin>
+		            <!-- end::wsdl[] -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+			            <artifactId>maven-antrun-plugin</artifactId>
+			            <version>1.8</version>
+			            <executions>
+			               <execution>
+			                  <phase>compile</phase>
+			                  <goals>
+			                     <goal>run</goal>
+			                  </goals>
+			                  <configuration>
+			                  <tasks>
+			                     <echo>Using Environment Properties</echo>
+						            <copy file="config/application-${env}.yml" tofile="${project.build.outputDirectory}/application.yml"/>
+								    <copy file="config/logback-spring-${env}.xml" tofile="${project.build.outputDirectory}/logback-spring.xml"/>
+			                  </tasks>
+			                  </configuration>
+			               </execution>
+			            </executions>
+            		</plugin>
+            	</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
+        <dependency>
+               <groupId>org.springframework.ws</groupId>
+               <artifactId>spring-ws-core</artifactId>
+        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+	
+	<build>
+				<finalName>springBoot-SOAP-client</finalName>
+				<plugins>
+
+<!--             		<plugin> -->
+<!-- 			            <groupId>org.springframework.boot</groupId> -->
+<!-- 			            <artifactId>spring-boot-maven-plugin</artifactId> -->
+<!-- 			            <configuration> -->
+<!-- 			                <executable>true</executable> -->
+<!-- 			            </configuration> -->
+<!-- 			        </plugin> -->
+	        
+	        <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-compiler-plugin</artifactId>
+			    <configuration>
+			        <compilerArguments>
+			            <source>1.8</source>
+			            <target>1.8</target>
+			        </compilerArguments>
+			    </configuration>
+			</plugin>
+		</plugins>
+	</build>
+			
 </project>

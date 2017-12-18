@@ -5,14 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import it.myst.test.soap.client.SoapClient;
-import it.myst.test.wsdl.GetAirportInformationByCountry;
-import it.myst.test.wsdl.GetAirportInformationByCountryResponse;
+import it.myst.test.soap.flight.client.base.FlightSoapClient;
+import it.myst.test.wsdl.airport.client.GetAirportInformationByCountry;
+import it.myst.test.wsdl.airport.client.GetAirportInformationByCountryResponse;
 
 @Configuration
 @ConfigurationProperties(prefix = "it.myst.test.flight.soap")
-public class WebserviceXSiteSoapClient extends SoapClient {
-	private static final Logger log = LoggerFactory.getLogger(WebserviceXSiteSoapClient.class);
+public class WebserviceXSiteFlightSoapClient extends FlightSoapClient {
+	private static final Logger log = LoggerFactory.getLogger(WebserviceXSiteFlightSoapClient.class);
 
 	public GetAirportInformationByCountryResponse lookup(String cntry) {
 		GetAirportInformationByCountry request = new GetAirportInformationByCountry();
