@@ -13,8 +13,34 @@
 <!--     <groupId>it.myst.test.soap</groupId> -->
     <artifactId>springBoot-SOAP-server</artifactId>
     <version>1.0-SNAPSHOT</version>
+    
+    <!-- caso jar deployment -->
+<!--     <packaging>jar</packaging> -->
+    
+    <!-- caso war deployment -->
+    <packaging>war</packaging>
+	<properties>
+	      <start-class>it.myst.test.soap.documento.config.SpringBootWebApplicationWar</start-class>
+	</properties>
+	<!-- caso war deployment END -->
 
     <dependencies>
+    
+    	<!-- caso war deployment -->
+    	<!-- To build a war file that is both executable and deployable into an external container -->
+    	<!-- we need to mark the embedded container dependencies as "provided" and packaging "war", e.g: -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- caso war deployment END -->
+        
+
         <!-- Spring WS dependencies: -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
