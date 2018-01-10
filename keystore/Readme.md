@@ -47,3 +47,6 @@ Aggiungere ai Connector:
 ## 2.2 Check
 https://localhost:8443/
 http://localhost:8081/
+[check per progetto server:]
+https://<host>:8443/springBoot-SOAP-server/ws/documentoDef.wsdl
+

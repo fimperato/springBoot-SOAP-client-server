@@ -12,4 +12,7 @@ mvn jaxb2:xjc
 mvn clean generate-sources
 mvn eclipse:eclipse (to force build path by maven settings)
 
-#### other (header security, more method to soap endpoint, https)
+#### other (header security, more method to soap endpoint)
+
+## Https: 
+https://<host>:8443/springBoot-SOAP-server/ws/documentoDef.wsdl
