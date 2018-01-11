@@ -11,18 +11,19 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 @ConfigurationProperties(prefix = "it.myst.test.soap")
-public class FlightSoapClient extends WebServiceGatewaySupport {
-	private static final Logger log = LoggerFactory.getLogger(FlightSoapClient.class);
+public class BaseSoapClient extends WebServiceGatewaySupport {
+	private static final Logger log = LoggerFactory.getLogger(BaseSoapClient.class);
 	
 	private String generatePackage;
+	
+	protected String defaultGeneratePackage;
 	
 	@Bean
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		// this package must match the package in the <generatePackage> specified in
-		// pom.xml
+		// this package must match the package in the <generatePackage> specified in pom.xml
 		if(generatePackage==null) {
-			generatePackage="it.myst.test.wsdl.airport.client";
+			generatePackage=this.defaultGeneratePackage;
 		}
 		marshaller.setContextPath(generatePackage);
 		return marshaller;
@@ -59,6 +60,14 @@ public class FlightSoapClient extends WebServiceGatewaySupport {
 		
 		return response;
 		
+	}
+
+	public String getDefaultGeneratePackage() {
+		return defaultGeneratePackage;
+	}
+
+	public void setDefaultGeneratePackage(String defaultGeneratePackage) {
+		this.defaultGeneratePackage = defaultGeneratePackage;
 	}
 
 }
