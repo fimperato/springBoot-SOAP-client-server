@@ -16,5 +16,7 @@ mvn -Pspring-client generate-sources
 ## lancio service per chiamata verso endpoint SOAP
 curl http://localhost:8080/springBoot-SOAP-client-0.0.1-SNAPSHOT/fligths/italy
 
+curl http://localhost:8082/documenti/filename-doc1
+
 
 
