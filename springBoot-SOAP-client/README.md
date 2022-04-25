@@ -50,6 +50,6 @@ docker container run -it --publish 8081:8080 fimperato/springboot-soap-client
 
 `$ curl http://localhost:8081/springBoot-SOAP-client/add/1/9`
 
-`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><AddResponse xmlns="http://tempuri.org/"><AddResult>10</AddResult></AddResponse>`
+`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><AddResponse><AddResult>10</AddResult></AddResponse>`
 
 
