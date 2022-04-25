@@ -1,7 +1,8 @@
 Spring SOAP Client-Server
 ==========================
 
-Designing, implementing and testing client-server SOAP services with REST API utility interface
+Designing, implementing and testing client-server SOAP services with REST API utility interface. 
+
 Project contains the following artifacts:
 
 | Module | Description |
