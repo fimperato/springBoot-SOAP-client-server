@@ -3,8 +3,11 @@ Spring SOAP Client-Server
 
 Designing, implementing and testing client-server SOAP services with REST API utility interface
 Project contains the following artifacts:
-- springBoot-SOAP-server          SOAP server services project
-- springBoot-SOAP-client          SOAP client services project
+
+| Module | Description |
+|---|---|
+| springBoot-SOAP-server | SOAP server services project |
+| springBoot-SOAP-client | SOAP client services project |
 
 ## Install
 mvn clean install
