@@ -31,6 +31,10 @@ Compiled source
 #######
 *.iml
 # Eclipse file
-*.project
+.classpath
+.project
+*/.project
 .settings/
 */target/**
+
+.idea/*

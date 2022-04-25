@@ -1,96 +1,223 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>it.myst.test.soap</groupId>
+    <groupId>it.fi.soap.test</groupId>
     <artifactId>springBoot-SOAP-client-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  
-<!--   <groupId>it.myst.test.soap</groupId> -->
+
   <artifactId>springBoot-SOAP-client</artifactId>
-<!--   <version>0.0.1-SNAPSHOT</version> -->
+  <!--   <version>0.0.1-SNAPSHOT</version> -->
   <name>springBoot-SOAP-client</name>
   <description>springBoot SOAP client</description>
-  <packaging>war</packaging>
+
+	<packaging>war</packaging>
   
-  <profiles>
+  	<profiles>
+		<profile>
+			<id>cxf-codegen-sources</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.cxf</groupId>
+						<artifactId>cxf-codegen-plugin</artifactId>
+						<version>3.4.2</version>
+						<executions>
+							<execution>
+								<id>generate-sources</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>wsdl2java</goal>
+								</goals>
+								<configuration>
+									<sourceRoot>${project.basedir}/src/main/cxf-codegen-plugin-generated-sources/java</sourceRoot>
+									<wsdlOptions>
+										<wsdlOption>
+											<wsdl>${project.basedir}/src/main/resources/wsdl/calculator-wsdl.asmx</wsdl>
+											<packagenames>
+												<packagename>it.fi.soap.test.def.wsdl</packagename>
+											</packagenames>
+<!--											<extraargs>-->
+<!--												<extraarg>-client</extraarg>-->
+<!--											</extraargs>-->
+										</wsdlOption>
+									</wsdlOptions>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jaxws-sources</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jaxws-maven-plugin</artifactId>
+						<version>2.6</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>wsimport</goal>
+								</goals>
+								<configuration>
+									<wsdlDirectory>${project.basedir}/src/main/resources/wsdl/</wsdlDirectory>
+									<wsdlFiles>
+										<wsdlFile>calculator-wsdl.asmx</wsdlFile>
+									</wsdlFiles>
+									<wsdlUrls>
+										<!-- <wsdlUrl>http://www.dneonline.com/calculator.asmx?WSDL</wsdlUrl> -->
+									</wsdlUrls>
+									<packageName>it.fi.soap.test.def.wsdl.jaxws</packageName>
+									<sourceDestDir>
+										${project.basedir}/src/main/jaxws-plugin-generated-sources/java
+									</sourceDestDir>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>jaxb2-sources</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jvnet.jaxb2.maven2</groupId>
+						<artifactId>maven-jaxb2-plugin</artifactId>
+						<version>0.14.0</version>
+						<executions>
+							<execution>
+								<id>schema-generate</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>generate</goal>
+								</goals>
+								<configuration>
+									<schemaLanguage>WSDL</schemaLanguage>
+									<schemas>
+										<schema>
+											<!-- <url>http://www.dneonline.com/calculator.asmx?WSDL</url> -->
+											<url>${project.basedir}/src/main/resources/wsdl/calculator-wsdl.asmx?WSDL</url>
+										</schema>
+									</schemas>
+									<generatePackage>it.fi.soap.test.def.wsdl.jax2b</generatePackage>
+									<generateDirectory>${project.basedir}/src/main/jaxb2-plugin-generated-sources/java</generateDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>com.google.code.maven-replacer-plugin</groupId>
+						<artifactId>maven-replacer-plugin</artifactId>
+						<version>1.3.8</version>
+						<executions>
+							<execution>
+								<id>generated-java-classes-replacer</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+								<configuration>
+									<includes>
+										<include>src/main/jaxb2-plugin-generated-sources/**/*.java</include>
+									</includes>
+									<replacements>
+										<replacement>
+											<token>(^//.*\u000a|^\u000a)*^package</token>
+											<value>// Generated class
+package</value>
+										</replacement>
+									</replacements>
+								</configuration>
+							</execution>
+							<execution>
+								<id>generated-package-info-files-replacer</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>replace</goal>
+								</goals>
+								<configuration>
+									<includes>
+										<include>src/main/**/package-info.java</include>
+									</includes>
+									<replacements>
+										<replacement>
+											<token>(^//.*\u000a|^\u000a)*^@javax.xml.bind.annotation.XmlSchema</token>
+											<value>// Generated class
+@javax.xml.bind.annotation.XmlSchema</value>
+										</replacement>
+									</replacements>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<regex>true</regex>
+							<regexFlags>
+								<regexFlag>MULTILINE</regexFlag>
+							</regexFlags>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-clean-plugin</artifactId>
+						<version>3.2.0</version>
+						<executions>
+							<execution>
+								<id>prepackage-clean</id>
+								<phase>prepare-package</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>${project.basedir}/src/main/</directory>
+									<includes>
+										<include>**/META-INF/*.episode</include>
+									</includes>
+									<followSymlinks>false</followSymlinks>
+								</fileset>
+							</filesets>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<profile>
 			<id>spring-client</id>
 			<activation>
-	            <property>
-	                <name>env</name>
-	            </property>
-	       	</activation>			
+				<property>
+					<name>env</name>
+				</property>
+			</activation>
 			<build>
 				<plugins>
-            		<!-- tag::wsdl[] -->
-		            <plugin>
-		                <groupId>org.jvnet.jaxb2.maven2</groupId>
-		                <artifactId>maven-jaxb2-plugin</artifactId>
-		                <version>0.13.3</version>
-		                <executions>
-		                    <execution>
-		                    	<id>schema1-generate</id>
-		                    	<phase>generate-sources</phase>
-		                        <goals>
-		                            <goal>generate</goal>
-		                        </goals>
-								<configuration>
-				                    <schemaLanguage>WSDL</schemaLanguage>
-				                    <schemas>
-				                        <schema>
-				                            <url>http://www.webservicex.net/airport.asmx?WSDL</url>
-				                        </schema>
-				                    </schemas>
-				                    <generatePackage>it.myst.test.wsdl.airport.client</generatePackage>
-				                    <generateDirectory>${project.basedir}/generated-sources/java</generateDirectory>
-				                </configuration>
-		                    </execution>
-		                    
-		                    <execution>
-		                    	<id>schema2-generate</id>
-		                    	<phase>generate-sources</phase>
-		                        <goals>
-		                            <goal>generate</goal>
-		                        </goals>
-			                    <configuration>
-				                    <schemaLanguage>WSDL</schemaLanguage>
-				                    <schemas>
-				                        <schema>
-				                            <url>http://localhost:8082/ws/documentoDef.wsdl</url>
-				                        </schema>
-				                    </schemas>
-				                    <generatePackage>it.myst.test.wsdl.documento.client</generatePackage>
-				                    <generateDirectory>${project.basedir}/generated-sources/java</generateDirectory>
-				                </configuration>
-		                    </execution>
-		                </executions>
-		                
-		                
-				                
-		            </plugin>
-		            <!-- end::wsdl[] -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-			            <artifactId>maven-antrun-plugin</artifactId>
-			            <version>1.8</version>
-			            <executions>
-			               <execution>
-			                  <phase>compile</phase>
-			                  <goals>
-			                     <goal>run</goal>
-			                  </goals>
-			                  <configuration>
-			                  <tasks>
-			                     <echo>Using Environment Properties</echo>
-						            <copy file="config/application-${env}.yml" tofile="${project.build.outputDirectory}/application.yml"/>
-								    <copy file="config/logback-spring-${env}.xml" tofile="${project.build.outputDirectory}/logback-spring.xml"/>
-			                  </tasks>
-			                  </configuration>
-			               </execution>
-			            </executions>
-            		</plugin>
-            	</plugins>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+						<executions>
+						   <execution>
+							  <phase>compile</phase>
+							  <goals>
+								 <goal>run</goal>
+							  </goals>
+							  <configuration>
+							  <tasks>
+								 <echo>Using Environment Properties</echo>
+									<copy file="config/application-${env}.yml" tofile="${project.build.outputDirectory}/application.yml"/>
+									<copy file="config/logback-spring-${env}.xml" tofile="${project.build.outputDirectory}/logback-spring.xml"/>
+							  </tasks>
+							  </configuration>
+						   </execution>
+						</executions>
+					</plugin>
+				</plugins>
 			</build>
 		</profile>
 	</profiles>
@@ -113,6 +240,43 @@
                <artifactId>spring-ws-core</artifactId>
         </dependency>
 
+		<!-- jaxb-api -->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.25.0-GA</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>javax.xml.soap</groupId>
+			<artifactId>javax.xml.soap-api</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.messaging.saaj</groupId>
+			<artifactId>saaj-impl</artifactId>
+			<version>1.5.1</version>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -131,17 +295,30 @@
 	</dependencies>
 	
 	<build>
-				<finalName>springBoot-SOAP-client</finalName>
-				<plugins>
+		<finalName>springBoot-SOAP-client</finalName>
 
-<!--             		<plugin> -->
-<!-- 			            <groupId>org.springframework.boot</groupId> -->
-<!-- 			            <artifactId>spring-boot-maven-plugin</artifactId> -->
-<!-- 			            <configuration> -->
-<!-- 			                <executable>true</executable> -->
-<!-- 			            </configuration> -->
-<!-- 			        </plugin> -->
-	        
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/main/jaxb2-plugin-generated-sources/java</source>
+								<source>src/main/jaxws-plugin-generated-sources/java</source>
+								<source>src/main/cxf-codegen-plugin-generated-sources/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 	        <plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-compiler-plugin</artifactId>

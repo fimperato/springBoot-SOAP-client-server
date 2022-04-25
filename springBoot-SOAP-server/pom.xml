@@ -5,12 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-	    <groupId>it.myst.test.soap</groupId>
+	    <groupId>it.fi.soap.test</groupId>
 	    <artifactId>springBoot-SOAP-client-server</artifactId>
 	    <version>0.0.1-SNAPSHOT</version>
 	</parent>
-  
-<!--     <groupId>it.myst.test.soap</groupId> -->
+
     <artifactId>springBoot-SOAP-server</artifactId>
     <version>1.0-SNAPSHOT</version>
     
@@ -19,8 +18,9 @@
     
     <!-- caso war deployment -->
     <packaging>war</packaging>
+
 	<properties>
-	      <start-class>it.myst.test.soap.documento.config.SpringBootWebApplicationWar</start-class>
+	      <start-class>it.fi.soap.test.documento.config.SpringBootWebApplicationWar</start-class>
 	</properties>
 	<!-- caso war deployment END -->
 
@@ -51,6 +51,39 @@
             <artifactId>wsdl4j</artifactId>
         </dependency>
 
+        <!-- jaxb-api -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-core</artifactId>
+            <version>2.3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.25.0-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.messaging.saaj</groupId>
+            <artifactId>saaj-impl</artifactId>
+            <version>1.5.3</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -60,65 +93,12 @@
 
     <build>
     	<finalName>springBoot-SOAP-server</finalName>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-
-            <!-- Conversion: xsd to java -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>2.2</version>
-                <executions>
-                    <execution>
-                        <id>xjc</id>
-                        <goals>
-                            <goal>xjc</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-<!--                    deprecated in 2.x: <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory> -->
-<!--                    You should never generate to your source folder, but to target/generated-sources/xjc. 
-						Generated code should not be version-controlled and can be deleted at any-time since it will be regenerated anyway.
-						Generated code should always be located under target, the build directory of Maven. The jaxb2-maven-plugin will generate classes by default under target/generated-sources/jaxb and there's really no reason to change that. 
-						<outputDirectory>${project.basedir}/src/main/java/</outputDirectory> -->
-                    <outputDirectory>${project.basedir}/generated-sources/java/</outputDirectory>
-                    <clearOutputDir>true</clearOutputDir>
-                     <!-- Indicate that we should use DTD input instead of XSDs -->
-	                <sourceType>XmlSchema</sourceType>
-	
-	                <!-- Define the directory where we should find the DTD files -->
-	                <sources>
-	                    <source>${project.basedir}/src/main/resources/xsd/documentoSchema.xsd</source>
-					    <source>${project.basedir}/src/main/resources/xsd/directory-xsds</source>
-	                </sources>
-                </configuration>
-            </plugin>
-            
-	      	<plugin>
-		        <groupId>org.codehaus.mojo</groupId>
-		        <artifactId>build-helper-maven-plugin</artifactId>
-<!-- 		        <version>3.0.0</version> -->
-		        <executions>
-		          <execution>
-		            <id>add-source</id>
-		            <phase>generate-sources</phase>
-		            <goals>
-		              <goal>add-source</goal>
-		            </goals>
-		            <configuration>
-		              <sources>
-<!-- 		            if in target dir, use that:  	<source>${project.build.directory}/generated-sources/java/</source> -->
-		              	<source>${project.basedir}/generated-sources/java/</source>
-		              </sources>
-		            </configuration>
-		          </execution>
-		        </executions>
-	      	</plugin>
-			
 			<plugin>
 			    <groupId>org.apache.maven.plugins</groupId>
 			    <artifactId>maven-compiler-plugin</artifactId>
@@ -129,9 +109,176 @@
 			        </compilerArguments>
 			    </configuration>
 			</plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/jaxb2-plugin-generated-sources/java</source>
+                                <source>src/main/jaxws-plugin-generated-sources/java</source>
+                                <source>src/main/cxf-codegen-plugin-generated-sources/java</source>
+                                <source>src/main/jaxb2-maven-plugin-generated-sources/java/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>cxf-codegen-sources</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.cxf</groupId>
+                        <artifactId>cxf-codegen-plugin</artifactId>
+                        <version>3.4.2</version>
+                        <executions>
+                            <execution>
+                                <id>generate-sources</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>wsdl2java</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceRoot>${project.basedir}/src/main/cxf-codegen-plugin-generated-sources/java</sourceRoot>
+                                    <wsdlOptions>
+                                        <wsdlOption>
+                                            <wsdl>${project.basedir}/src/main/resources/wsdl/calculator-wsdl.asmx</wsdl>
+                                            <packagenames>
+                                                <packagename>it.fi.soap.test.def.wsdl.calculator</packagename>
+                                            </packagenames>
+                                            <extraargs>
+                                                <extraarg>-impl</extraarg>
+<!--                                                <extraarg>-server</extraarg>-->
+                                            </extraargs>
+                                        </wsdlOption>
+                                    </wsdlOptions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jaxb2-maven-plugin-sources</id>
+            <build>
+                <plugins>
+                    <!-- Conversion: xsd to java -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>jaxb2-maven-plugin</artifactId>
+                        <version>2.2</version>
+                        <executions>
+                            <execution>
+                                <id>xjc</id>
+                                <goals>
+                                    <goal>xjc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!--                    deprecated in 2.x: <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory> -->
+                            <!--                    You should never generate to your source folder, but to target/generated-sources/xjc.
+                                                    Generated code should not be version-controlled and can be deleted at any-time since it will be regenerated anyway.
+                                                    Generated code should always be located under target, the build directory of Maven. The jaxb2-maven-plugin will generate classes by default under target/generated-sources/jaxb and there's really no reason to change that.
+                                                    <outputDirectory>${project.basedir}/src/main/java/</outputDirectory> -->
+                            <outputDirectory>${project.basedir}/src/main/jaxb2-maven-plugin-generated-sources/java/</outputDirectory>
+                            <clearOutputDir>true</clearOutputDir>
+                            <!-- Indicate that we should use DTD input instead of XSDs -->
+                            <sourceType>XmlSchema</sourceType>
+                            <!-- Define the directory where we should find the DTD files -->
+                            <sources>
+                                <source>${project.basedir}/src/main/resources/xsd/documento/documentoSchema.xsd</source>
+                                <source>${project.basedir}/src/main/resources/xsd/documento/directory-xsds</source>
+                            </sources>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>maven-replacer-plugin</artifactId>
+                        <version>1.3.8</version>
+                        <executions>
+                            <execution>
+                                <id>generated-java-classes-replacer</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                                <configuration>
+                                    <includes>
+                                        <include>src/main/jaxb2-maven-plugin-generated-sources/**/*.java</include>
+                                    </includes>
+                                    <replacements>
+                                        <replacement>
+                                            <token>(^//.*\u000a|^\u000a)*^package</token>
+                                            <value>// Generated class
+package</value>
+                                        </replacement>
+                                    </replacements>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>generated-package-info-files-replacer</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                                <configuration>
+                                    <includes>
+                                        <include>src/main/**/package-info.java</include>
+                                    </includes>
+                                    <replacements>
+                                        <replacement>
+                                            <token>(^//.*\u000a|^\u000a)*^@javax.xml.bind.annotation.XmlSchema</token>
+                                            <value>// Generated class
+@javax.xml.bind.annotation.XmlSchema</value>
+                                        </replacement>
+                                    </replacements>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <regex>true</regex>
+                            <regexFlags>
+                                <regexFlag>MULTILINE</regexFlag>
+                            </regexFlags>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>prepackage-clean</id>
+                                <phase>prepare-package</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.basedir}/src/main/</directory>
+                                    <includes>
+                                        <include>**/META-INF/*.episode</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

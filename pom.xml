@@ -7,10 +7,12 @@
         <version>1.4.7.RELEASE</version> <!-- last release with spring-boot-starter-ws -->
   </parent>
     
-  <groupId>it.myst.test.soap</groupId>
+  <groupId>it.fi.soap.test</groupId>
   <artifactId>springBoot-SOAP-client-server</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+
   <packaging>pom</packaging>
+
   <name>springBoot-SOAP-client-server</name>
   <description>springBoot SOAP client-server</description>
   

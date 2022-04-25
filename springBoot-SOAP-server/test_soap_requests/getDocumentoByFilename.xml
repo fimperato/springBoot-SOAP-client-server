@@ -1,7 +1,7 @@
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
     <SOAP-ENV:Header/>
     <SOAP-ENV:Body>
-        <ns2:getDocumentoRequest xmlns:ns2="http://soap.test.myst.it/documentoDef">
+        <ns2:getDocumentoRequest xmlns:ns2="http://documento.wsdl.def.test.soap.fi.it/documentoDef">
             <ns2:filename>doc_cartaIdentita.pdf</ns2:filename>
         </ns2:getDocumentoRequest>
     </SOAP-ENV:Body>

@@ -1,14 +1,15 @@
 server:
-  port: 8083
+  port: 8080
   context-path: /springBoot-SOAP-client
 it:
-  myst:
+  soap:
     test:
-      wsdl:
-        flight:
+      def:
+        wsdl:
           client:
-            generatePackage: it.myst.test.wsdl.airport.client2
-            defaultUri: http://www.webservicex.net/airport.asmx
+            generatePackage: it.fi.soap.test.def.wsdl
+          server:
+            defaultUri: http://172.17.0.1:8082/springBoot-SOAP-server/ws/calculatorDef.wsdl
 spring:
   application:
     name: springBoot-SOAP-client
