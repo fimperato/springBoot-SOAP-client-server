@@ -54,3 +54,12 @@ Base sample SOAP service check:
         <AddResult>35</AddResult>
     </AddResponse>
 ```
+
+## Graphical interface to build new simple service from WSDL definition
+
+Graphical interface builder for simple WSDL definition accessible at the following link: 
+
+https://fimperato.herokuapp.com/soap-service-builder
+
+![alt text](https://github.com/fimperato/springBoot-SOAP-client-server/blob/master/utility/images/graphicalInterfaceWSDLBuilder.png?raw=true)
+
