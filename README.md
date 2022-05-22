@@ -57,9 +57,13 @@ Base sample SOAP service check:
 
 ## Graphical interface to build new simple service from WSDL definition
 
-Graphical interface builder for simple WSDL definition accessible at the following link: 
+A graphical user interface builder for simple WSDL definition accessible at the following link: 
 
 https://fimperato.herokuapp.com/soap-service-builder
+
+WSDL file built can be downloaded by GUI. Then run the server with WSDL file path and name to start the server with new service class definitions.
+
+```./start-server.sh -s 8082 -w "$HOME/temp/services" -n "new-soap-service.wsdl"```
 
 ![alt text](https://github.com/fimperato/springBoot-SOAP-client-server/blob/master/utility/images/graphicalInterfaceWSDLBuilder.png?raw=true)
 
