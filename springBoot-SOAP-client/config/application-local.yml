@@ -9,7 +9,10 @@ it:
           client:
             generatePackage: it.fi.soap.test.def.wsdl
           server:
-            defaultUri: http://172.17.0.1:8082/springBoot-SOAP-server/ws/calculatorDef.wsdl
+            defaultHost: 172.17.0.1:8082
+            defaultUriPath: /springBoot-SOAP-server/ws/calculatorDef.wsdl
+            envHost:
+            #envHost: ${SOAP_SERVER_HOST}
 spring:
   application:
     name: springBoot-SOAP-client

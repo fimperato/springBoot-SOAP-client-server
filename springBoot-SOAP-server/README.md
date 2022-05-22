@@ -43,3 +43,7 @@ docker image build -t fimperato/springboot-soap-server ./
 docker container run -it --publish 8081:8080 --network=host fimperato/springboot-soap-server
 
 ```
+
+## Sh file, call example
+
+`./start-server.sh -s 8082 -w "$HOME/temp/services" -n "new-soap-service.wsdl" `

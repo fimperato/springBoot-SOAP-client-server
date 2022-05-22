@@ -279,6 +279,67 @@ package</value>
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>new-soap-service</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <mkdir dir="${basedir}/target/classes/wsdl/new-service" />
+                                        <copy todir="${basedir}/target/classes/wsdl/new-service">
+                                            <!-- dir="${env.HOME}/temp/services" includes="new-soap-service.wsdl" -->
+                                            <fileset
+                                                    dir="${new.wsdl.path}"
+                                                    includes="${new.wsdl.name}"
+                                            />
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.cxf</groupId>
+                        <artifactId>cxf-codegen-plugin</artifactId>
+                        <version>3.4.2</version>
+                        <executions>
+                            <execution>
+                                <id>generate-sources</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>wsdl2java</goal>
+                                </goals>
+                                <configuration>
+                                    <sourceRoot>${project.basedir}/src/main/cxf-codegen-plugin-generated-sources/java</sourceRoot>
+                                    <wsdlOptions>
+                                        <wsdlOption>
+                                            <wsdl>${basedir}/target/classes/wsdl/new-service/new-soap-service.wsdl</wsdl>
+                                            <packagenames>
+                                                <packagename>it.fi.soap.test.def.wsdl.newservice</packagename>
+                                            </packagenames>
+                                            <extraargs>
+                                                <extraarg>-impl</extraarg>
+                                                <!--                                                <extraarg>-server</extraarg>-->
+                                            </extraargs>
+                                        </wsdlOption>
+                                    </wsdlOptions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
 </project>

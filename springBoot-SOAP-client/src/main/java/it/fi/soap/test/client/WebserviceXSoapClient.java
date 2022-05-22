@@ -8,13 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 @Configuration
 @ConfigurationProperties(prefix = "it.fi.soap.test.def.wsdl")
 public class WebserviceXSoapClient extends BaseSoapClient {
 
-	@Value("${it.soap.test.def.wsdl.server.defaultUri}")
-	private String serverDefaultUri;
+	@Value("${it.soap.test.def.wsdl.server.defaultHost}")
+	private String serverDefaultHost;
+	@Value("${it.soap.test.def.wsdl.server.defaultUriPath}")
+	private String serverDefaultUriPath;
+	@Value("${it.soap.test.def.wsdl.server.envHost}")
+	private String serverEnvHost;
 
 	private static final Logger log = LoggerFactory.getLogger(WebserviceXSoapClient.class);
 
@@ -29,11 +34,13 @@ public class WebserviceXSoapClient extends BaseSoapClient {
 		request.setIntA(a);
 		request.setIntB(b);
 
+		String serverUri = "http://" + (StringUtils.isEmpty(serverEnvHost) ? serverDefaultHost : serverEnvHost) + serverDefaultUriPath;
 		AddResponse response =
 				(AddResponse) this.GetResponse(
 						request,
 						"http://calculator.wsdl.def.test.soap.fi.it/calculatorDef/Add", // "http://tempuri.org/Add"
-						serverDefaultUri); // "http://www.dneonline.com/calculator.asmx"
+						serverUri // "http://www.dneonline.com/calculator.asmx"
+				);
 		log.info("The response is: " + response.toString());
 		return response;
 	}

@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
@@ -48,6 +49,14 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	public Wsdl11Definition wsdl11DefinitionA() {
 		SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
 		wsdl11Definition.setWsdl(new ClassPathResource("wsdl/calculator-wsdl.asmx"));
+		return wsdl11Definition;
+	}
+
+	@Profile("new-soap-service")
+	@Bean(name="newServiceDef")
+	public Wsdl11Definition wsdl11DefinitionB() {
+		SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+		wsdl11Definition.setWsdl(new ClassPathResource("wsdl/new-service/new-soap-service.wsdl"));
 		return wsdl11Definition;
 	}
 

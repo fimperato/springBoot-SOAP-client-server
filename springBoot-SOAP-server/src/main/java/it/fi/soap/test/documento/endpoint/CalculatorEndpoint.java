@@ -2,12 +2,6 @@ package it.fi.soap.test.documento.endpoint;
 
 import it.fi.soap.test.def.wsdl.calculator.Add;
 import it.fi.soap.test.def.wsdl.calculator.AddResponse;
-import it.fi.soap.test.def.wsdl.documento.documentodef.Documento;
-import it.fi.soap.test.def.wsdl.documento.documentodef.GetDocumentoRequest;
-import it.fi.soap.test.def.wsdl.documento.documentodef.GetDocumentoResponse;
-import it.fi.soap.test.def.wsdl.documento.documentodef.UploadDocumentoRequest;
-import it.fi.soap.test.documento.dao.DocumentoDAO;
-import it.fi.soap.test.exception.DocumentoResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
