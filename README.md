@@ -59,7 +59,7 @@ Base sample SOAP service check:
 
 A graphical user interface builder for simple WSDL definition accessible at the following link: 
 
-http://localhost:4200/#/soap-service-builder
+https://ifrancesco.web.app/#/soap-service-builder
 
 WSDL file built can be downloaded by GUI. Then run the server with WSDL file path and name to start the server with new service class definitions.
 
